@@ -1,24 +1,32 @@
 <template>
   <label v-if="label">{{ label }}</label>
-  <input :value="value" @input="updateValue" v-bind="$attrs">
+  <input :value="value" @input="updateValue" v-bind="$attrs" v-on="listeners" />
 </template>
 
 <script>
 export default {
   name: 'BaseInput',
-    inheritAttrs: false,
+  inheritAttrs: false,
   props: {
     label: {
       type: String,
       default: ''
     },
-      value: [String, Number]
+    value: [String, Number]
   },
-    methods:{
-      updateValue(event){
-          this.$emit('input', event.target.value)
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        input: this.updateValue
       }
     }
+  },
+  methods: {
+    updateValue(event) {
+      this.$emit('input', event.target.value)
+    }
+  }
 }
 </script>
 
