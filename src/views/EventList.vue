@@ -18,11 +18,6 @@ export default {
   components: {
     EventCard
   },
-  data() {
-    return {
-      events: []
-    }
-  },
   created() {
     this.$store.dispatch('fetchEvents', { perPage: 3 , page: this.page})
   },
